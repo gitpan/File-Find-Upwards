@@ -1,12 +1,11 @@
 ---
-abstract: 'search for a upwards, starting with cwd'
+abstract: 'Look for a file in the current directory and upwards'
 author:
   - 'Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>'
 build_requires:
-  Test::Compile: 0
   Test::More: 0.70
 distribution_type: module
-generated_by: 'Module::Install version 0.76'
+generated_by: 'Module::Install version 0.77'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -16,13 +15,10 @@ no_index:
   directory:
     - inc
     - t
-recommends:
-  Test::Pod: 0
-  Test::Pod::Coverage: 0
 requires:
   Attribute::Memoize: 0
-  File::Spec::Functions: 0
+  Path::Class: 0
   perl: 5.6.0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
