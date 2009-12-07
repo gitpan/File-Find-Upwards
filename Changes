@@ -1,5 +1,10 @@
 Revision history for Perl extension File-Find-Upwards
 
+0.04 Mon 2009.12.07 00:58:16 CET (Marcel Gruenauer <marcel@cpan.org>)
+     - added find_containing_dir_upwards()
+     - reduced dependencies using author tests
+     - better dist engineering (INSTALL, README, README.mkdn etc.)
+
 0.03  Tue Dec 16 13:20:03 CET 2008 (Marcel Gruenauer <marcel@cpan.org>)
      - Now based on Path::Class instead of File::Spec::Functions - trying to
        cleanly avoid a bug where it hanged on Windows because rootdir() there
