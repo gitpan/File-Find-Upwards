@@ -1,13 +1,10 @@
+
 This is the Perl distribution File-Find-Upwards.
-
-## Description
-
-It provides a function to look for a file in the current directory and upwards.
 
 ## Installation
 
-File-Find-Upwards installation is straightforward. If your CPAN shell is
-set up, you should just be able to do
+File-Find-Upwards installation is straightforward.
+If your CPAN shell is set up, you should just be able to do
 
     % cpan File::Find::Upwards
 
@@ -22,10 +19,9 @@ Then install it:
 
 ## Documentation
 
-File-Find-Upwards documentation is available as in POD. So you can do:
+File-Find-Upwards documentation is available as in POD.
+So you can do:
 
     % perldoc File::Find::Upwards
 
-to read the documentation online with your favorite pager.
-
-Marcel Gruenauer
+to read the documentation with your favorite pager.
