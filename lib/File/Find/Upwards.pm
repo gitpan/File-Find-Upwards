@@ -3,7 +3,9 @@ use strict;
 use warnings;
 
 package File::Find::Upwards;
-our $VERSION = '1.100860';
+BEGIN {
+  $File::Find::Upwards::VERSION = '1.102030';
+}
 # ABSTRACT: Look for a file in the current directory and upwards
 use Path::Class;
 use Attribute::Memoize;
@@ -11,17 +13,19 @@ use Exporter qw(import);
 our @EXPORT = qw(file_find_upwards find_containing_dir_upwards);
 
 sub file_find_upwards : Memoize {
-    my $wanted_file = shift;
+    my @wanted_files = @_;
     my $dir         = dir('.')->absolute;
     my %seen;
     my $result;    # left undef as we'll return undef if we didn't find it
   LOOP: {
         do {
             last if $seen{$dir}++;
-            my $file = $dir->file($wanted_file);
-            if (-e $file) {
-                $result = $file->absolute;
-                last LOOP;
+            for my $wanted_file (@wanted_files) {
+                my $file = $dir->file($wanted_file);
+                if (-e $file) {
+                    $result = $file->absolute;
+                    last LOOP;
+                }
             }
         } while ($dir = $dir->parent);
     }
@@ -29,19 +33,15 @@ sub file_find_upwards : Memoize {
 }
 
 sub find_containing_dir_upwards : Memoize {
-    my $wanted_file = shift;
+    my @wanted_files = @_;
     my $dir         = dir('.')->absolute;
     my %seen;
-    my $result;    # left undef as we'll return undef if we didn't find it
-  LOOP: {
-        do {
-            last if $seen{$dir}++;
-            my $file = $dir->file($wanted_file);
-            if (-e $file) {
-                return $dir;
-            }
-        } while ($dir = $dir->parent);
-    }
+    do {
+        last if $seen{$dir}++;
+        for my $wanted_file (@wanted_files) {
+            return $dir if -e $dir->file($wanted_file);
+        }
+    } while ($dir = $dir->parent);
     undef;
 }
 1;
@@ -56,7 +56,7 @@ File::Find::Upwards - Look for a file in the current directory and upwards
 
 =head1 VERSION
 
-version 1.100860
+version 1.102030
 
 =head1 SYNOPSIS
 
@@ -73,20 +73,23 @@ Provides functions that can find a file in the current or a parent directory.
 
 =head2 file_find_upwards
 
-Takes a filename and looks for the file in the current directory. If there is
-no such file, it traverses up the directory hierarchy until it finds the file
-or until it reaches the topmost directory. If the file is found, the full path
-to the file is returned. If the file is not found, undef is returned.
+Takes a list of filenames and looks for these file in the current directory.
+If there is no such file, it traverses up the directory hierarchy until it
+finds at least one of those files or until it reaches the topmost directory.
+If one of these files is found, the full path to the file is returned. The
+filenames are checked in the order they are given, so if several of those
+files exist, the first one will be returned. If none of the given files are
+found, undef is returned.
 
-The result is memoized, so repeated calls to the function with the same
-filename will return the result of the first call for that filename.
+The result is memoized, so repeated calls to the function with the same list
+of filenames will return the result of the first call for that filename.
 
 This function is exported automatically.
 
 =head2 find_containing_dir_upwards
 
-Like C<file_find_upwards()>, but reports the directory that contains the file.
-A C<Path::Class::Dir> object is returned.
+Like C<file_find_upwards()>, but reports the directory that contains one of
+the given filenames. A C<Path::Class::Dir> object is returned.
 
 This function is exported automatically.
 
@@ -99,7 +102,7 @@ See perlmodinstall for information and options on installing Perl modules.
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=File-Find-Upwards>.
+L<http://rt.cpan.org>.
 
 =head1 AVAILABILITY
 
@@ -115,7 +118,7 @@ and github infrastructure.
 
 =head1 AUTHOR
 
-  Marcel Gruenauer <marcel@cpan.org>
+Marcel Gruenauer <marcel@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 

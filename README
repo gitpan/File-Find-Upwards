@@ -3,7 +3,7 @@ NAME
     upwards
 
 VERSION
-    version 1.100860
+    version 1.102030
 
 SYNOPSIS
         use File::Find::Upwards qw(file_find_upwards);
@@ -17,20 +17,23 @@ DESCRIPTION
 
 FUNCTIONS
   file_find_upwards
-    Takes a filename and looks for the file in the current directory. If
-    there is no such file, it traverses up the directory hierarchy until it
-    finds the file or until it reaches the topmost directory. If the file is
-    found, the full path to the file is returned. If the file is not found,
-    undef is returned.
+    Takes a list of filenames and looks for these file in the current
+    directory. If there is no such file, it traverses up the directory
+    hierarchy until it finds at least one of those files or until it reaches
+    the topmost directory. If one of these files is found, the full path to
+    the file is returned. The filenames are checked in the order they are
+    given, so if several of those files exist, the first one will be
+    returned. If none of the given files are found, undef is returned.
 
     The result is memoized, so repeated calls to the function with the same
-    filename will return the result of the first call for that filename.
+    list of filenames will return the result of the first call for that
+    filename.
 
     This function is exported automatically.
 
   find_containing_dir_upwards
-    Like "file_find_upwards()", but reports the directory that contains the
-    file. A "Path::Class::Dir" object is returned.
+    Like "file_find_upwards()", but reports the directory that contains one
+    of the given filenames. A "Path::Class::Dir" object is returned.
 
     This function is exported automatically.
 
@@ -42,7 +45,7 @@ BUGS AND LIMITATIONS
     No bugs have been reported.
 
     Please report any bugs or feature requests through the web interface at
-    <http://rt.cpan.org/Public/Dist/Display.html?Name=File-Find-Upwards>.
+    <http://rt.cpan.org>.
 
 AVAILABILITY
     The latest version of this module is available from the Comprehensive
@@ -56,7 +59,7 @@ AVAILABILITY
     infrastructure.
 
 AUTHOR
-      Marcel Gruenauer <marcel@cpan.org>
+    Marcel Gruenauer <marcel@cpan.org>
 
 COPYRIGHT AND LICENSE
     This software is copyright (c) 2008 by Marcel Gruenauer.

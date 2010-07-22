@@ -1,5 +1,8 @@
 Revision history for Perl extension File-Find-Upwards
 
+1.102030  2010-07-22 15:36:22 Europe/Vienna
+    - functions now take a list of filenames
+
 1.100860  2010-03-27 11:15:47 Europe/Vienna
     - converted the distribution to Dist::Zilla-style
 
